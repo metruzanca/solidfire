@@ -42,6 +42,7 @@
   "typesVersions": {},
   "scripts": {
     "dev": "vite serve dev",
+    "build:vercel": "vite build dev",
     "build": "tsup",
     "test": "concurrently pnpm:test:*",
     "test:client": "vitest",
