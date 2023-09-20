@@ -1,17 +1,17 @@
 {
-  "name": "{{name_of_lib}}",
+  "name": "solidfire",
   "version": "0.0.0",
-  "description": "{{desc_of_lib}}",
+  "description": "A minimal, yet powerful library that puts realtime Firebase data into Solid signals.",
   "license": "MIT",
-  "author": "{{me}}",
+  "author": "metruzanca",
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/{{me}}/{{name_of_lib}}.git"
+    "url": "git+https://github.com/metruzanca/solidfire.git"
   },
-  "homepage": "https://github.com/{{me}}/{{name_of_lib}}#readme",
+  "homepage": "https://github.com/metruzanca/solidfire#readme",
   "bugs": {
-    "url": "https://github.com/{{me}}/{{name_of_lib}}/issues"
+    "url": "https://github.com/metruzanca/solidfire/issues"
   },
   "files": [
     "dist"
