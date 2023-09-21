@@ -14,21 +14,25 @@ import {
   query,
   QueryCompositeFilterConstraint,
   QueryNonFilterConstraint,
+  setDoc,
 } from 'firebase/firestore'
 import { Accessor, from } from 'solid-js'
 
+// TODO maintain firebase's { id, ref, data } shape
+// wont be doing that ^ immediately because it's a breaking change to my existing apps
 export type Document<T> = T & {
   id: string
   ref: DocumentReference<T>
 }
 
 export type ColRef<T> = string | Query<T, DocumentData> | CollectionReference<T, DocumentData>
+export type DocRef<T> = string | DocumentReference<T>
 
 // TODO solid context instead of firestore everywhere
 
 export const now = () => new Date().toISOString()
 
-export function fromCol<T>(
+export function fromCollection<T>(
   firestore: Firestore | undefined,
   ref: ColRef<T>,
   startWith: T[] = [],
@@ -72,9 +76,7 @@ export function fromCol<T>(
   return signal as Accessor<T[]>
 }
 
-export type DocRef<T> = string | DocumentReference<T>
-
-export function fromDoc<T>(
+export function fromDocument<T>(
   firestore: Firestore | undefined,
   ref: DocRef<T>,
   startWith?: T,
@@ -136,3 +138,37 @@ export function filterRef<T>(
     typeof ref === 'string' ? collection(firestore, ref) : (ref as CollectionReference)
   return query(collectionRef, compositeFilter, ...queryConstraints) as Query<T, DocumentData>
 }
+
+/**
+ * Firebase does not allow keys set as undefined for data in setDoc
+ * this helper removes undefined keys from the object
+ */
+export function noUndefined<T extends Record<string, any>>(obj: T) {
+  const newObject: T = {} as T
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      newObject[key as keyof typeof obj] = value
+    }
+  }
+  return newObject
+}
+
+// TODO See if I can make this safer?
+// TODO merge options (also todo: learn what they do properly...)
+/** Obviously, you can absolutely mess shit up with this if you're not careful */
+export async function updateDoc<T>(
+  firestore: Firestore,
+  ref: DocRef<T>,
+  data: Partial<T>
+) {
+
+  const docRef = typeof ref === "string" ? doc(firestore, ref) : ref as DocumentReference<T>;
+
+  await setDoc(docRef as any, {
+    ...noUndefined(data),
+    createdAt: now()
+  });
+}
+
+// TODO createDoc
+// TODO deleteDoc
