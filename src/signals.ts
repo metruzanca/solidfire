@@ -156,18 +156,13 @@ export function noUndefined<T extends Record<string, any>>(obj: T) {
 // TODO See if I can make this safer?
 // TODO merge options (also todo: learn what they do properly...)
 /** Obviously, you can absolutely mess shit up with this if you're not careful */
-export async function updateDoc<T>(
-  firestore: Firestore,
-  ref: DocRef<T>,
-  data: Partial<T>
-) {
-
-  const docRef = typeof ref === "string" ? doc(firestore, ref) : ref as DocumentReference<T>;
+export async function updateDoc<T>(firestore: Firestore, ref: DocRef<T>, data: Partial<T>) {
+  const docRef = typeof ref === 'string' ? doc(firestore, ref) : (ref as DocumentReference<T>)
 
   await setDoc(docRef as any, {
     ...noUndefined(data),
-    createdAt: now()
-  });
+    createdAt: now(),
+  })
 }
 
 // TODO createDoc

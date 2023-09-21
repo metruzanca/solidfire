@@ -1,10 +1,8 @@
-import admin from "firebase-admin";
-import { Credential } from "firebase-admin/app";
-import { Component, JSX, createContext, useContext } from "solid-js";
+import admin from 'firebase-admin'
+import { Credential } from 'firebase-admin/app'
+import { Component, JSX, createContext, useContext } from 'solid-js'
 
 const serviceAccount = 'serviceAccountKey.json'
-
-
 
 type FirebaseContextType = {
   // app: FirebaseAppType;
@@ -13,20 +11,22 @@ type FirebaseContextType = {
   // auth: Auth;
 }
 
-export const FirebaseContextServer = createContext<FirebaseContextType | null>(null);
+export const FirebaseContextServer = createContext<FirebaseContextType | null>(null)
 
 type Props = {
-  credential: string;
-  children: JSX.Element;
+  credential: string
+  children: JSX.Element
 }
-export const FirebaseAppServer: Component<Props> = (props) => {
+export const FirebaseAppServer: Component<Props> = props => {
   // TODO firebase-admin for server-side rendering
-  const app = admin.initializeApp({
-    credential: admin.credential.cert({
-      // TODO
-    }
-    )
-  }, 'server');
+  const app = admin.initializeApp(
+    {
+      credential: admin.credential.cert({
+        // TODO
+      }),
+    },
+    'server',
+  )
   const firestore = app.firestore()
   const storage = app.storage()
   const auth = null as any //app.auth()
@@ -40,8 +40,8 @@ export const FirebaseAppServer: Component<Props> = (props) => {
 
 export const useFirebaseServer = () => {
   const context = useContext(FirebaseContextServer)
-  console.log(context);
+  console.log(context)
 
-  if (!context) throw new Error("Firebase context not found")
+  if (!context) throw new Error('Firebase context not found')
   return context
 }
