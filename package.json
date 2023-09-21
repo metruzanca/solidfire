@@ -1,6 +1,6 @@
 {
   "name": "solidfire",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A minimal, yet powerful library that puts realtime Firebase data into Solid signals.",
   "license": "MIT",
   "author": "metruzanca",
@@ -44,6 +44,7 @@
     "dev": "vite serve dev",
     "build:vercel": "vite build dev",
     "build": "tsup",
+    "release": "pnpm run build && changeset publish",
     "test": "concurrently pnpm:test:*",
     "test:client": "vitest",
     "test:ssr": "pnpm run test:client --mode ssr",
@@ -52,12 +53,14 @@
     "lint": "concurrently pnpm:lint:*",
     "lint:code": "eslint --ignore-path .gitignore --max-warnings 0 src/**/*.{js,ts,tsx,jsx}",
     "lint:types": "tsc --noEmit",
-    "update-deps": "pnpm up -Li"
+    "update-deps": "pnpm up -Li",
+    "changeset": "changeset"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "concurrently": "^8.2.0",
