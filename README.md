@@ -8,6 +8,8 @@
 
 A minimal, yet powerful library that puts realtime Firebase data into Solid signals.
 
+In the `/dev` directory is a Solidjs demo app built using this library. You can see it live here https://solidfire.vercel.app. (In a later version I'll add something more interesting to show off the realtime aspect of firebase)
+
 ## ⚠️ Currently in Development 🛠️
 I got the idea from [SvelteFire](https://github.com/codediodeio/sveltefire) to make this lib for a few side projects but I've only implemented what I needed so far. Right now I'm in the process of copying this over from the version implemented in my apps.
 
