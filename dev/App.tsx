@@ -2,17 +2,16 @@ import { For, type Component } from 'solid-js'
 import logo from './logo.svg'
 import { firestore } from './firebase'
 // SolidFire imports
-import { collectionPath, fromCol } from '../src/signals'
+import { fromCollection } from '../src'
+// import { collectionPath } from 'src/signals'
 
 type Meme = {
   name: string
   url: string
 }
 
-type Collections = 'memes'
-
 const App: Component = () => {
-  const data = fromCol<Meme>(firestore, collectionPath<Collections>('memes'))
+  const data = fromCollection<Meme>(firestore, 'memes')
 
   return (
     <div class="bg-gray-900 h-screen">
