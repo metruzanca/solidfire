@@ -29,7 +29,7 @@ export type ColRef<T> = string | Query<T, DocumentData> | CollectionReference<T,
 export const now = () => new Date().toISOString()
 
 export function fromCol<T>(
-  firestore: Firestore|undefined,
+  firestore: Firestore | undefined,
   ref: ColRef<T>,
   startWith: T[] = [],
 ): Accessor<T[]> {
@@ -75,7 +75,7 @@ export function fromCol<T>(
 export type DocRef<T> = string | DocumentReference<T>
 
 export function fromDoc<T>(
-  firestore: Firestore|undefined,
+  firestore: Firestore | undefined,
   ref: DocRef<T>,
   startWith?: T,
 ): Accessor<T | undefined> {
