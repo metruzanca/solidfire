@@ -26,5 +26,14 @@ pnpm add solidfire
 Use it:
 
 ```tsx
-import solidfire from 'solidfire'
+import { fromCollection, fromDocument } from 'solidfire'
+
+const memes = fromCollection<{ url: string; name: string }>('memes')
+
+// in a component..
+<For each={memes()}>
+  {meme => (
+    <img class="max-h-80" src={meme.url} alt={meme.name} />
+  )}
+</For>
 ```
