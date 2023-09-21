@@ -1,6 +1,6 @@
 {
   "name": "solidfire",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A minimal, yet powerful library that puts realtime Firebase data into Solid signals.",
   "license": "MIT",
   "author": "metruzanca",
