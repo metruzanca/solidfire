@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage"
-import { getFirestore } from "firebase/firestore"
+import { initializeApp } from 'firebase/app'
+import { getStorage } from 'firebase/storage'
+import { getFirestore } from 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,8 +15,7 @@ const appConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 }
 
-console.log(appConfig);
-
+console.log(appConfig)
 
 export const PROJECT_ID = appConfig.projectId
 export const APP_STORAGE_BUCKET = `${appConfig.projectId}.appspot.com`

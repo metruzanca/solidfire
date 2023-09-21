@@ -15,27 +15,27 @@ import {
   getDoc as fbGetDoc,
   query,
   QueryCompositeFilterConstraint,
-  QueryNonFilterConstraint
-} from "firebase/firestore";
-import { Accessor, from } from "solid-js";
+  QueryNonFilterConstraint,
+} from 'firebase/firestore'
+import { Accessor, from } from 'solid-js'
 
 export type Document<T> = T & {
-  id: string;
-  ref: DocumentReference<T>;
+  id: string
+  ref: DocumentReference<T>
 }
 
 export type ColRef<T> = string | Query<T, DocumentData> | CollectionReference<T, DocumentData>
 
 // TODO solid context instead of firestore everywhere
 
-export const now = () => new Date().toISOString();
+export const now = () => new Date().toISOString()
 
 export function fromCol<T>(
   firestore: Firestore,
   ref: ColRef<T>,
-  startWith: T[] = []
+  startWith: T[] = [],
 ): Accessor<T[]> {
-  let unsubscribe: () => void;
+  let unsubscribe: () => void
 
   // TODO firebase-admin
   // // Fallback for SSR
@@ -49,24 +49,23 @@ export function fromCol<T>(
 
   // Fallback for missing SDK
   if (!firestore) {
-    console.warn(
-      "Firestore is not initialized. Are you missing FirebaseApp as a parent component?"
-    );
+    console.warn('Firestore is not initialized. Are you missing FirebaseApp as a parent component?')
     const signal = () => []
-    return signal;
+    return signal
   }
 
-  const collectionRef = typeof ref === "string" ? collection(firestore, ref) : ref as CollectionReference;
+  const collectionRef =
+    typeof ref === 'string' ? collection(firestore, ref) : (ref as CollectionReference)
 
   const signal = from<T[]>(set => {
     set(startWith)
 
     unsubscribe = onSnapshot(collectionRef, (snapshot: QuerySnapshot) => {
       const data = snapshot.docs.map((doc: QueryDocumentSnapshot) => {
-        return { id: doc.id, ref: doc.ref, ...doc.data() } as T;
-      });
-      set(data);
-    });
+        return { id: doc.id, ref: doc.ref, ...doc.data() } as T
+      })
+      set(data)
+    })
 
     return unsubscribe
   })
@@ -79,9 +78,9 @@ export type DocRef<T> = string | DocumentReference<T>
 export function fromDoc<T>(
   firestore: Firestore,
   ref: DocRef<T>,
-  startWith?: T
+  startWith?: T,
 ): Accessor<T | undefined> {
-  let unsubscribe: () => void;
+  let unsubscribe: () => void
 
   // Fallback for SSR
   // if (!globalThis.window) {
@@ -95,37 +94,37 @@ export function fromDoc<T>(
 
   // Fallback for missing SDK
   if (!firestore) {
-    console.warn(
-      "Firestore is not initialized. Are you missing FirebaseApp as a parent component?"
-    );
-    return () => undefined;
+    console.warn('Firestore is not initialized. Are you missing FirebaseApp as a parent component?')
+    return () => undefined
   }
 
-  const docRef = typeof ref === "string" ? doc(firestore, ref) : ref as DocumentReference<T>;
+  const docRef = typeof ref === 'string' ? doc(firestore, ref) : (ref as DocumentReference<T>)
 
   const signal = from<T>(set => {
     if (startWith) {
       set(() => startWith)
     }
 
-    unsubscribe = onSnapshot(docRef as DocumentReference, (snapshot) => {
+    unsubscribe = onSnapshot(docRef as DocumentReference, snapshot => {
       const data = {
         id: snapshot.id,
         ref: snapshot.ref,
-        ...snapshot.data() as T
+        ...(snapshot.data() as T),
       }
 
       set(() => data)
-    });
+    })
 
-    return unsubscribe;
+    return unsubscribe
   })
 
   return signal
 }
 
-export const collectionPath = <Collections extends string>(base: Collections, id?: string) => id ? `${base}/${id}` : base;
-export const documentPath = <Collections extends string>(base: Collections, id: string) => `${base}/${id}`;
+export const collectionPath = <Collections extends string>(base: Collections, id?: string) =>
+  id ? `${base}/${id}` : base
+export const documentPath = <Collections extends string>(base: Collections, id: string) =>
+  `${base}/${id}`
 
 export function filterRef<T>(
   firestore: Firestore,
@@ -133,6 +132,7 @@ export function filterRef<T>(
   compositeFilter: QueryCompositeFilterConstraint,
   ...queryConstraints: QueryNonFilterConstraint[]
 ): Query<T, DocumentData> {
-  const collectionRef = typeof ref === "string" ? collection(firestore, ref) : ref as CollectionReference;
+  const collectionRef =
+    typeof ref === 'string' ? collection(firestore, ref) : (ref as CollectionReference)
   return query(collectionRef, compositeFilter, ...queryConstraints) as Query<T, DocumentData>
 }
