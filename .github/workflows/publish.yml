@@ -37,8 +37,7 @@ jobs:
           publish: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Uncomment to automatically publish to npm
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # - name: Send a Discord notification if a publish happens
       #   if: steps.changesets.outputs.published == 'true'
