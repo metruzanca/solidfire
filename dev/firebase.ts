@@ -15,8 +15,6 @@ const appConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 }
 
-console.log(appConfig)
-
 export const PROJECT_ID = appConfig.projectId
 export const APP_STORAGE_BUCKET = `${appConfig.projectId}.appspot.com`
 
