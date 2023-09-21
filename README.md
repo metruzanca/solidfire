@@ -25,6 +25,8 @@ I will likely also create many of the things Jeff has created in his [SvelteFire
 
 > _did you like my pun?_
 
+See [Changelog](CHANGELOG.md) to keep an eye on the progress. Version 1.0.0 will come out once I have a feature set comparable to sveltefire + a solid spin on things.
+
 ## Quick start
 
 Install it:
