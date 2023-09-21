@@ -1,6 +1,9 @@
 node_modules
 dist
 gitignore
+.env
+.vscode/settings.json
 
 # tsup
 tsup.config.bundled_*.{m,c,}s
+.vercel

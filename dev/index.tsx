@@ -1,5 +1,5 @@
 import { render } from 'solid-js/web'
-import './styles.css'
+// import './styles.css' // using tailwind via cdn for demo app
 
 import App from './App'
 

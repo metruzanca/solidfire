@@ -83,5 +83,9 @@
   "engines": {
     "node": ">=18",
     "pnpm": ">=8.6.0"
+  },
+  "dependencies": {
+    "firebase": "^10.4.0",
+    "firebase-admin": "^11.10.1"
   }
 }
