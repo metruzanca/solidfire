@@ -11,8 +11,6 @@ import {
   collection,
   doc,
   onSnapshot,
-  setDoc,
-  getDoc as fbGetDoc,
   query,
   QueryCompositeFilterConstraint,
   QueryNonFilterConstraint,
@@ -31,7 +29,7 @@ export type ColRef<T> = string | Query<T, DocumentData> | CollectionReference<T,
 export const now = () => new Date().toISOString()
 
 export function fromCol<T>(
-  firestore: Firestore,
+  firestore: Firestore|undefined,
   ref: ColRef<T>,
   startWith: T[] = [],
 ): Accessor<T[]> {
@@ -49,6 +47,7 @@ export function fromCol<T>(
 
   // Fallback for missing SDK
   if (!firestore) {
+    // eslint-disable-next-line no-console
     console.warn('Firestore is not initialized. Are you missing FirebaseApp as a parent component?')
     const signal = () => []
     return signal
@@ -76,7 +75,7 @@ export function fromCol<T>(
 export type DocRef<T> = string | DocumentReference<T>
 
 export function fromDoc<T>(
-  firestore: Firestore,
+  firestore: Firestore|undefined,
   ref: DocRef<T>,
   startWith?: T,
 ): Accessor<T | undefined> {
@@ -94,6 +93,7 @@ export function fromDoc<T>(
 
   // Fallback for missing SDK
   if (!firestore) {
+    // eslint-disable-next-line no-console
     console.warn('Firestore is not initialized. Are you missing FirebaseApp as a parent component?')
     return () => undefined
   }
